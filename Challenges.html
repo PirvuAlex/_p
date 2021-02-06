@@ -1,0 +1,699 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UYC Challenges</title>
+<body>
+<h1 id="pickDiffTxt">Pick a difficulty</h1>
+<div id="easyDiffBtn" onclick="animateEasyDiff()" onmouseover="document.getElementById(this.id.split('DiffBtn').join('DiffTxt')).style.visibility='visible'" onmouseout="document.getElementById(this.id.split('DiffBtn').join('DiffTxt')).style.visibility='hidden'"></div>
+<div id="mediumDiffBtn" onclick="animateMediumDiff()" onmouseover="document.getElementById(this.id.split('DiffBtn').join('DiffTxt')).style.visibility='visible'" onmouseout="document.getElementById(this.id.split('DiffBtn').join('DiffTxt')).style.visibility='hidden'"></div>
+<div id="hardDiffBtn" onclick="animateHardDiff()" onmouseover="document.getElementById(this.id.split('DiffBtn').join('DiffTxt')).style.visibility='visible'" onmouseout="document.getElementById(this.id.split('DiffBtn').join('DiffTxt')).style.visibility='hidden'"></div>
+<h1 id="easyDiffTxt">Easy</h1>
+<h1 id="mediumDiffTxt">Medium</h1>
+<h1 id="hardDiffTxt">Hard</h1>
+<div id="easyChallengesLayer">
+ <button id="ECLB" onclick="hideChallenges('easy')">&#9660;</button>
+</div>
+<div id="easyChallenges">
+ <div id="easy_challenge1" data-desc='Print "Hello, World!" in the terminal.' data-challenge="terminal_print" available="true"><h1>Terminal message</h1></div>
+ <div id="easy_challenge2" data-desc='Create a simple body object.' data-challenge="create_body" available="true"><h1>Create a body</h1></div>
+ <div id="easy_challenge3" available="false"><h1>Coming soon...</h1></div>
+</div>
+<div id="easyChallengeInformation">
+ <span id="eCI"></span>
+ <button onclick="start_challenge()" id="TCB_e">try challenge</button>
+</div>
+
+<div id="mediumChallenges">
+    <div id="medium_challenge1" data-desc='Create a playable audio system' data-challenge="audio_play" available="true"><h1>Audio System</h1></div>
+    <div id="medium_challenge2" data-desc='Print the input audio (microphone) level in the terminal.' data-challenge="microphone_play" available="true"><h1>Microphone System</h1></div>
+    <div id="medium_challenge3" available="false"><h1>Coming soon...</h1></div>
+   </div>
+   <div id="mediumChallengeInformation">
+    <span id="mCI"></span>
+    <button onclick="start_challenge()" id="TCB_m">try challenge</button>
+   </div>
+
+   <div id="hardChallenges">
+    <div id="hard_challenge1" data-desc='Create a heading element with id "microphoneLevel" that displays the input audio (microphone) repeatedly.' data-challenge="microphone_print" available="true"><h1>Microphone Level</h1></div>
+    <div id="hard_challenge2" data-desc='challenge 2' data-challenge="challenge 2" available="true"><h1>challenge 2</h1></div>
+    <div id="hard_challenge3" available="false"><h1>Coming soon...</h1></div>
+   </div>
+   <div id="hardChallengeInformation">
+    <span id="hCI"></span>
+    <button onclick="start_challenge()" id="TCB_h">try challenge</button>
+   </div>
+
+<style>
+body {
+ user-select: none;
+ background:rgb(24,24,27);
+ margin:0;
+ overflow:hidden;
+ font-family: monospace;
+}
+#mediumChallengeInformation {
+ transition: opacity 0.5s, height 0.5s;
+ position:absolute;
+ visibility: hidden;
+ left:22%;
+ top:8%;
+ width:calc(100% - 23%);
+ height:90%;
+ display:flex;
+ justify-content: center;
+ align-items:center;
+ background:#151515;
+}
+#mediumChallenges {
+ visibility: hidden;
+ transition: opacity 0.5s, height 0.5s;
+ position:absolute;
+ left:1%;
+ top:8%;
+ width:calc(100% - 80%);
+ height:90%;
+ display:flex;
+ justify-content: center;
+ align-items:center;
+ background:#151515;
+ opacity:0;
+}
+#medium_challenge1 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:5%;
+ display:flex;
+ color:#ffffff;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#medium_challenge1:hover {
+ border-bottom: 0px solid transparent;
+ background:lightgray;
+ color:#000000;
+ opacity: 1;
+}
+#medium_challenge2 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:10%;
+ display:flex;
+ color:#ffffff;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#medium_challenge2:hover {
+ border-bottom: 0px solid transparent;
+ background:lightgray;
+ color:#000000;
+ opacity: 1;
+}
+#medium_challenge3 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ color:#ffffff;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:15%;
+ display:flex;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#medium_challenge3:hover {
+ opacity: 1;
+ background:lightgray;
+}
+#TCB_e {
+ visibility: hidden;
+ outline:none;
+ border:none;
+ background: #333333;
+ width:100%;
+ height:10%;
+ position: absolute;
+ bottom:0%;
+ left:0%;
+ color:#c5c5c1;
+ cursor:pointer;
+ opacity:0.7;
+ font-Size:250%;
+ border-Radius:3%;
+}
+#TCB_e:hover {
+ opacity:1;
+}
+#TCB_m {
+ visibility: hidden;
+ outline:none;
+ border:none;
+ background: #333333;
+ width:100%;
+ height:10%;
+ position: absolute;
+ bottom:0%;
+ left:0%;
+ color:#c5c5c1;
+ cursor:pointer;
+ opacity:0.7;
+ font-Size:250%;
+ border-Radius:3%;
+}
+#TCB_m:hover {
+ opacity:1;
+}
+#TCB_h {
+ visibility: hidden;
+ outline:none;
+ border:none;
+ background: #333333;
+ width:100%;
+ height:10%;
+ position: absolute;
+ bottom:0%;
+ left:0%;
+ color:#c5c5c1;
+ cursor:pointer;
+ opacity:0.7;
+ font-Size:250%;
+ border-Radius:3%;
+}
+#TCB_h:hover {
+ opacity:1;
+}
+#eCI {
+ font-Size: 250%;
+ color:#c5c5c1;
+}
+#mCI {
+ font-Size: 250%;
+ color:#c5c5c1;
+}
+#hCI {
+ font-Size: 250%;
+ color:#c5c5c1;
+}
+#easyChallengeInformation {
+ transition: opacity 0.5s, height 0.5s;
+ position:absolute;
+ visibility: hidden;
+ left:22%;
+ top:8%;
+ width:calc(100% - 23%);
+ height:90%;
+ display:flex;
+ justify-content: center;
+ align-items:center;
+ background:#151515;
+}
+#hardChallengeInformation {
+ transition: opacity 0.5s, height 0.5s;
+ position:absolute;
+ visibility: hidden;
+ left:22%;
+ top:8%;
+ width:calc(100% - 23%);
+ height:90%;
+ display:flex;
+ justify-content: center;
+ align-items:center;
+ background:#151515;
+}
+#easyChallengesLayer {
+ transition: opacity 0.5s;
+ visibility: hidden;
+ position:absolute;
+ background:rgb(64,64,67);
+ left:1%;
+ top:5%;
+ width:calc(100% - 80%);
+ height:3%;
+ opacity:0;
+}
+#ECLB {
+ background:#000000;
+ color:#ffffff;
+ cursor:pointer;
+ outline:none;
+ border:none;
+ opacity:0.5;
+ position: absolute;
+ right:0;
+ width:10%;
+ height:100%;
+}
+#ECLB:hover {
+ opacity:1;
+}
+#easyChallenges {
+ visibility: hidden;
+ transition: opacity 0.5s, height 0.5s;
+ position:absolute;
+ left:1%;
+ top:8%;
+ width:calc(100% - 80%);
+ height:90%;
+ display:flex;
+ justify-content: center;
+ align-items:center;
+ background:#151515;
+ opacity:0;
+}
+#hardChallenges {
+ visibility: hidden;
+ transition: opacity 0.5s, height 0.5s;
+ position:absolute;
+ left:1%;
+ top:8%;
+ width:calc(100% - 80%);
+ height:90%;
+ display:flex;
+ justify-content: center;
+ align-items:center;
+ background:#151515;
+ opacity:0;
+}
+#easy_challenge1 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:5%;
+ display:flex;
+ color:#ffffff;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#easy_challenge1:hover {
+ border-bottom: 0px solid transparent;
+ background:lightgray;
+ color:#000000;
+ opacity: 1;
+}
+#easy_challenge2 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:10%;
+ display:flex;
+ color:#ffffff;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#easy_challenge2:hover {
+ border-bottom: 0px solid transparent;
+ background:lightgray;
+ color:#000000;
+ opacity: 1;
+}
+#easy_challenge3 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ color:#ffffff;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:15%;
+ display:flex;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#easy_challenge3:hover {
+ opacity: 1;
+ background:lightgray;
+}
+#hard_challenge1 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:5%;
+ display:flex;
+ color:#ffffff;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#hard_challenge1:hover {
+ border-bottom: 0px solid transparent;
+ background:lightgray;
+ color:#000000;
+ opacity: 1;
+}
+#hard_challenge2 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:10%;
+ display:flex;
+ color:#ffffff;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#hard_challenge2:hover {
+ border-bottom: 0px solid transparent;
+ background:lightgray;
+ color:#000000;
+ opacity: 1;
+}
+#hard_challenge3 {
+ border-bottom: 1px solid lightgray;
+ width:95%;
+ color:#ffffff;
+ height:5%;
+ position:absolute;
+ left:2.5%;
+ top:15%;
+ display:flex;
+ cursor:pointer;
+ justify-content:center;
+ align-items:center;
+ opacity: 0.8;
+}
+#hard_challenge3:hover {
+ opacity: 1;
+ background:lightgray;
+}
+#pickDiffTxt {
+ transition: opacity 0.5s;
+ color:white;
+ position:absolute;
+ background:transparent;
+ left:43%;
+ top:2%;
+ text-shadow: 0px 0px 10px #ffffff;
+}
+#easyDiffBtn {
+ transition: left 1s, opacity 0.5s;
+ cursor:pointer;
+ background:green;
+ box-Shadow: 0 0 5px lime;
+ width:100;
+ height:100;
+ border-Radius:100%;
+ position:absolute;
+ left:37%;
+ top:50%;
+}
+#easyDiffBtn:hover {
+    box-Shadow: 0 0 15px lime;
+    background:lime;
+}
+#easyDiffTxt {
+ visibility:hidden;
+ color:lime;
+ position:absolute;
+ left:38%;
+ top:43%;
+ text-Shadow: 0 0 15px lime;
+}
+#mediumDiffBtn {
+ transition: left 1s, opacity 0.5s;
+ background:orange;
+ box-Shadow: 0 0 5px yellow;
+ width:100;
+ height:100;
+ border-Radius:100%;
+ position:absolute;
+ left:47%;
+ top:50%; cursor:pointer;
+}
+#mediumDiffBtn:hover {
+    box-Shadow: 0 0 15px yellow;
+    background:yellow;
+}
+#mediumDiffTxt {
+ visibility:hidden;
+ color:yellow;
+ position:absolute;
+ left:47.3%;
+ top:43%;
+ text-Shadow: 0 0 15px yellow;
+}
+#hardDiffBtn {
+ transition: left 1s, opacity 0.5s;
+ cursor:pointer;
+ background:darkred;
+ box-Shadow: 0 0 5px red;
+ width:100;
+ height:100;
+ border-Radius:100%;
+ position:absolute;
+ left:57%;
+ top:50%;
+}
+#hardDiffBtn:hover {
+    box-Shadow: 0 0 15px red;
+    background:red;
+}
+#hardDiffTxt {
+ visibility:hidden;
+ color:red;
+ position:absolute;
+ left:58%;
+ top:43%;
+ text-Shadow: 0 0 15px red;
+}
+</style>
+<script>
+var backgroundIllusion
+var selectedChallengeDesc
+var eds=0
+var canType=false
+window.onload=function() {
+ checkAvailablesChallengesFor("easy")
+ checkAvailablesChallengesFor("medium")
+ checkAvailablesChallengesFor("hard")
+}
+function animateEasyDiff() {
+ currentDiff=difficulties[0]
+ easyDiffBtn.onclick=null
+ easyDiffBtn.style.left="47%"
+ easyDiffBtn.onmouseover=null
+ easyDiffBtn.onmouseout=null
+ if(typeof easyDiffTxt === 'object') {
+  easyDiffTxt.remove()
+  mediumDiffTxt.remove()
+  hardDiffTxt.remove()
+  mediumDiffBtn.remove()
+  hardDiffBtn.remove()
+}
+ pickDiffTxt.style.opacity=0
+ setTimeout
+ setTimeout(function(){pickDiffTxt.innerHTML="Challenges (easy)";pickDiffTxt.style.color="rgb(24,24,27)";pickDiffTxt.style.textShadow="0 0 15px lime"},500)
+ setTimeout(function(){BTN_FNC("easy");easyChallengeInformation.style.opacity=1;easyChallengeInformation.style.visibility="visible";easyChallenges.style.opacity=1;/*;easyChallengesLayer.style.opacity=1;easyChallengesLayer.style.visibility="visible";*/easyChallenges.style.visibility="visible";pickDiffTxt.style.opacity=1;pickDiffTxt.style.left="4.5%"},2500)
+ setTimeout(function(){
+ backgroundIllusion=setInterval(function(){
+  eds+=0.1
+  easyDiffBtn.style.background="green"
+  easyDiffBtn.style.cursor="default"
+  easyDiffBtn.style.transform="scale("+eds+")"
+if(eds>=25){
+ clearInterval(backgroundIllusion)
+ easyDiffBtn.remove()
+ document.body.style.background="green"
+}
+ })
+},1000)
+}
+
+function animateMediumDiff() {
+ currentDiff=difficulties[1]
+ mediumDiffBtn.onclick=null
+ mediumDiffBtn.style.left="47%"
+ mediumDiffBtn.onmouseover=null
+ mediumDiffBtn.onmouseout=null
+ if(typeof mediumDiffTxt === 'object') {
+  easyDiffTxt.remove()
+  mediumDiffTxt.remove()
+  hardDiffTxt.remove()
+  easyDiffBtn.remove()
+  hardDiffBtn.remove()
+}
+ pickDiffTxt.style.opacity=0
+ setTimeout
+ setTimeout(function(){pickDiffTxt.innerHTML="Challenges (medium)";pickDiffTxt.style.color="rgb(24,24,27)";pickDiffTxt.style.textShadow="0 0 15px yellow"},500)
+ setTimeout(function(){BTN_FNC("medium");mediumChallengeInformation.style.opacity=1;mediumChallengeInformation.style.visibility="visible";mediumChallenges.style.opacity=1;/*;easyChallengesLayer.style.opacity=1;easyChallengesLayer.style.visibility="visible";*/mediumChallenges.style.visibility="visible";pickDiffTxt.style.opacity=1;pickDiffTxt.style.left="4.5%"},2500)
+ setTimeout(function(){
+ backgroundIllusion=setInterval(function(){
+  eds+=0.1
+  mediumDiffBtn.style.background="orange"
+  mediumDiffBtn.style.cursor="default"
+  mediumDiffBtn.style.transform="scale("+eds+")"
+if(eds>=25){
+ clearInterval(backgroundIllusion)
+ mediumDiffBtn.remove()
+ document.body.style.background="orange"
+}
+ })
+},1000)
+}
+
+
+function animateHardDiff() {
+ currentDiff=difficulties[2]
+ hardDiffBtn.onclick=null
+ hardDiffBtn.style.left="47%"
+ hardDiffBtn.onmouseover=null
+ hardDiffBtn.onmouseout=null
+ if(typeof hardDiffTxt === 'object') {
+  easyDiffTxt.remove()
+  mediumDiffTxt.remove()
+  hardDiffTxt.remove()
+  easyDiffBtn.remove()
+  mediumDiffBtn.remove()
+}
+ pickDiffTxt.style.opacity=0
+ setTimeout
+ setTimeout(function(){pickDiffTxt.innerHTML="Challenges (hard)";pickDiffTxt.style.color="rgb(24,24,27)";pickDiffTxt.style.textShadow="0 0 15px red"},500)
+ setTimeout(function(){BTN_FNC("hard");hardChallengeInformation.style.opacity=1;hardChallengeInformation.style.visibility="visible";hardChallenges.style.opacity=1;/*;easyChallengesLayer.style.opacity=1;easyChallengesLayer.style.visibility="visible";*/hardChallenges.style.visibility="visible";pickDiffTxt.style.opacity=1;pickDiffTxt.style.left="4.5%"},2500)
+ setTimeout(function(){
+ backgroundIllusion=setInterval(function(){
+  eds+=0.1
+  hardDiffBtn.style.background="darkred"
+  hardDiffBtn.style.cursor="default"
+  hardDiffBtn.style.transform="scale("+eds+")"
+if(eds>=25){
+ clearInterval(backgroundIllusion)
+ hardDiffBtn.remove()
+ document.body.style.background="darkred"
+}
+ })
+},1000)
+}
+
+
+var difficulties=["easy","medium","hard"]
+function BTN_FNC(difficulty) {
+ eval('for(var c=0;c<'+difficulty+'Challenges.childElementCount;c++){if('+difficulty+'Challenges.children[c].getAttribute("available")=="true"){'+difficulty+'Challenges.children[c].addEventListener("click", selectChallenge)}}')
+}
+function checkAvailablesChallengesFor(difficulty) {
+if(!difficulty==atob("ZWFzeQ==")||!difficulty==atob("bWVkaXVt")/*||difficulty!==atob("aGFyZA==")*/) {
+  console.error("Cannot read difficulty of "+difficulty+".")
+}
+else {
+  eval('for(var c=0;c<'+difficulty+'Challenges.childElementCount;c++) { if('+difficulty+'Challenges.children[c].getAttribute("available")=="false") { '+difficulty+'Challenges.children[c].onmouseover=function(){for(var cc=0;cc<'+difficulty+'Challenges.childElementCount;cc++) { if('+difficulty+'Challenges.children[cc].getAttribute("available")=="false") { '+difficulty+'Challenges.children[cc].style.background="rgba(24,24,27,0.5)"}}};'+difficulty+'Challenges.children[c].onmouseout=function(){for(var cc=0;cc<'+difficulty+'Challenges.childElementCount;cc++) { if('+difficulty+'Challenges.children[cc].getAttribute("available")=="false") { '+difficulty+'Challenges.children[cc].style.background="transparent"}}};'+difficulty+'Challenges.children[c].style.cursor="not-allowed";'+difficulty+'Challenges.children[c].style.color="#000000" }}')
+ }
+}
+function hideChallenges(difficulty) {
+ if(ECLB.innerHTML=="\u25B2") {
+  setTimeout(function(){ECLB.innerHTML="\u25BC";eval(difficulty+"Challenges.style.height='90%';for(var c=0;c<"+difficulty+"Challenges.childElementCount;c++){"+difficulty+"Challenges.children[c].style.opacity=1;"+difficulty+"Challenges.children[c].style.visibility='visible';"+difficulty+"Challenges.children[c].style.transition='opacity 0.5s, visibility 0.5s';}");},3)
+ }
+ if(ECLB.innerHTML=="\u25BC") {
+    setTimeout(function(){ECLB.innerHTML="\u25B2";eval(difficulty+"Challenges.style.height='0%';for(var c=0;c<"+difficulty+"Challenges.childElementCount;c++){"+difficulty+"Challenges.children[c].style.opacity=0;"+difficulty+"Challenges.children[c].style.visibility='hidden';"+difficulty+"Challenges.children[c].style.transition='opacity 0.5s, visibility 0.5s';}");},3)
+ }
+}
+var selectedChallenge
+var selectedChallengeName
+function selectChallenge(event, cD) {
+    var theTarget=event.target
+    if(theTarget.toString().includes("Heading")) {
+     selectedChallenge=event.target.parentElement.getAttribute("data-challenge")
+     selectedChallengeName=event.target.parentElement.innerText
+     cD=currentDiff[0]
+     type(cD, true, event.target.parentElement.getAttribute("data-desc"))
+    }
+    else {
+        selectedChallengeName=event.target.innerText
+        selectedChallenge=event.target.getAttribute("data-challenge")
+        cD=currentDiff[0]
+        type(cD, true, event.target.getAttribute("data-desc"))
+    }
+    checkChallenge(selectedChallenge)
+}
+function start_challenge() {
+ localStorage.setItem("challenge",selectedChallengeName)
+ localStorage.setItem("challengeDesc",selectedChallengeDesc)
+}
+function checkChallenge(challenge) {
+ setInterval(function(){
+
+  if(challenge=="terminal_print") {
+    TCB_e.style.visibility="visible"
+    TCB_e.innerHTML="Try challenge ("+selectedChallengeName+")"
+  }
+  if(challenge=="create_body") {
+    TCB_e.style.visibility="visible"
+    TCB_e.innerHTML="Try challenge ("+selectedChallengeName+")"
+  }
+
+  if(challenge=="audio_play") {
+    TCB_m.style.visibility="visible"
+    TCB_m.innerHTML="Try challenge ("+selectedChallengeName+")"
+  }
+  if(challenge=="microphone_play") {
+    TCB_m.style.visibility="visible"
+    TCB_m.innerHTML="Try challenge ("+selectedChallengeName+")"
+  }
+
+  if(challenge=="microphone_print") {
+    TCB_h.style.visibility="visible"
+    TCB_h.innerHTML="Try challenge ("+selectedChallengeName+")"
+  }
+//   if(challenge=="") {
+//     TCB_m.style.visibility="visible"
+//     TCB_m.innerHTML="Try challenge ("+selectedChallengeName+")"
+//   }
+
+ })
+}
+function testMode() {
+ easyChallenges.style.opacity=1
+ easyChallenges.style.visibility="visible"
+ easyChallengeInformation.style.visibility="visible"
+ easyChallengeInformation.style.opacity=1
+ // easyChallengesLayer.style.opacity=1
+ // easyChallengesLayer.style.visibility="visible"
+}
+function type(diff, restart, _txt) {
+ if(!canType){
+ var i = 0
+ var text=_txt
+ if(restart){eval(diff+'CI.innerHTML=""')}
+ var autotype=setInterval(function(){
+    if(i < text.length){
+        eval(diff+'CI.innerHTML+=text.charAt(i)')
+        canType=true
+        i++
+    }
+    else {
+        canType=false
+        selectedChallengeDesc=document.getElementById(diff+'CI').innerHTML
+      clearInterval(autotype)
+  }
+ },10)
+}
+}
+// testMode()
+</script>
+</body>
+</head>
+</html>

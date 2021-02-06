@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/3024-night.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/abcdef.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/ambiance.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/base16-dark.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/bespin.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/blackboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/cobalt.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/colorforth.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/dracula.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/erlang-dark.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/hopscotch.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/icecoder.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/isotope.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/lesser-dark.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/liquibyte.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/material.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/mbo.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/mdn-like.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/monokai.css">
+<link rel="stylesheet" href="https://codemirror.net/addon/hint/show-hint.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/xml/xml.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/css/css.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/htmlmixed/htmlmixed.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+<script src="https://codemirror.net/addon/hint/show-hint.js"></script>
+<script src="https://codemirror.net/addon/selection/active-line.js"></script>
+<style>
+.cm-style1 { color: #c2a3c2; }
+</style>
+<textarea id="cTA"></textarea>
+<script>
+var themes = ['3024-night', 'abcdef', 'ambiance', 'base16-dark', 'bespin', 'blackboard', 'cobalt', 'colorforth', 'dracula', 'erlang-dark', 'hopscotch', 'icecoder', 'isotope', 'lesser-dark', 'liquibyte', 'material', 'mbo', 'mdn-like', 'monokai'];
+var editor = CodeMirror.fromTextArea(document.getElementById("cTA"), {
+  lineNumbers: true,
+  styleActiveLine: true,
+  theme:localStorage.getItem("previewingTheme"),
+  mode: "UYC_PROGRAMMING_LANGUAGE",
+  indentWithTabs: true,
+});
+var a="CodeMirror cm-s-"
+document.getElementsByTagName("div")[0].style.position="absolute"
+document.getElementsByTagName("div")[0].style.left="0%"
+document.getElementsByTagName("div")[0].style.bottom="0%"
+document.getElementsByTagName("div")[0].style.width="100%"
+document.getElementsByTagName("div")[0].style.height="100%"
+
+CodeMirror.defineMode("UYC_PROGRAMMING_LANGUAGE", function() {
+    return {
+        token: function(stream,state) {
+            if (themes[0]) {
+                return "style1";
+            }
+            else if (stream.match("0")||stream.match("1")||stream.match("2")||stream.match("3")||stream.match("4")||stream.match("5")||stream.match("6")||stream.match("7")||stream.match("8")||stream.match("9")) {
+                return "style2";
+            } 
+            else if (stream.match("true")||stream.match("false")||stream.match("elems")) {
+                return "style3";
+            } 
+            else {
+                stream.next();
+                return null;
+            }
+        }
+    };
+});
+
+window.onload=function(){
+    editor.options.readOnly=true
+    editor.setValue('##THIS IS A THEME PREVIEWER, YOU CAN ONLY SEE HOW YOUR COMPILER WILL LOOKS LIKE WITH DIFFERENT THEMES.\n\nThis is how it looks like with theme "'+localStorage.getItem("previewingTheme")+'" !')
+}
+</script>

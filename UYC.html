@@ -1,0 +1,778 @@
+<html>
+<body>
+<title>UYC - Game Engine</title>
+<script src="Data/dialog.js"></script>
+<h1 id="titleIntro">UYC</h1>
+<h1 id="titleTxt1">se</h1>
+<h1 id="titleTxt2">our</h1>
+<h1 id="titleTxt3">reativity</h1>
+<div id="loginDiv">
+<h1 id="loginTitle">Login</h1>
+<input type="text" id="loginUsername" maxlength="20" placeholder="Username">
+<input type="password" id="loginPassword" maxlength="30" placeholder="Password">
+<button onclick="login(loginUsername, loginPassword)" id="loginBtn">LOGIN</button>
+<h5 onclick="forgotPass()" id="forgotPassTxt">Forgot password ? Click here !</h5>
+<button onclick="redirectToSignUp()" id="signUpRD">Sign Up</button>
+</div>
+<div id="ownerEquipment">
+ <button id="ownerBtn" onclick="//alert('coming soon...')">OWNER OPTIONS</button>
+</div>
+
+<div onclick='window.open("auth.html")' class='g-sign-in-button'>
+	<div class=content-wrapper>
+	<div class='logo-wrapper'>  
+	<img src='https://developers.google.com/identity/images/g-logo.png'>
+	</div>  
+	<span class='text-container'> 
+	<span>Sign in with Google</span>
+	</span>
+	</div>  
+	</div>
+
+
+<div id="signupDiv">
+	<h1 id="signupTitle">Sign Up</h1>
+	<input type="text" id="signupUsername" maxlength="20" placeholder="Username">
+	<input type="email" id="signupEmail" placeholder="Email">
+	<input type="password" id="signupPassword" maxlength="30" onkeypress="addStrong()" placeholder="Password">
+	<button onclick="signup(signupUsername, signupPassword)" id="signupBtn">SIGN UP</button>
+	<button onclick="redirectToLogin()" id="loginRD">Login</button>
+	<div id="passwordStrongChecker"></div>
+	<h5 id="signupMsg"></h5>
+	<div id="loaderBg"><div id="loaderIll"></div></div>
+</div>
+<h5 id="copyrightInfo">&#169 UYC Corporation 2020</h5>
+<div onclick="changeCounter()" id="graphBg">
+ <div id="graph"></div>
+ <h3 id="fpsTxt">Loading...</h3>
+</div>
+<style>
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+	overflow:hidden;
+	user-select: none;
+}
+#ownerEquipment {
+ visibility: hidden;
+}
+#ownerBtn {
+ background: yellow;
+ text-shadow: 0 0 5px orange;
+ outline:none;
+ border:none;
+ position:absolute;
+ right:0;
+ bottom:0;
+ width:200;
+ height:50;
+ cursor:pointer;
+ font-Size:23;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ src: url("Fonts/Roboto/Roboto-Medium.ttf");
+ box-Shadow: inset 0 0 50px orange;
+}
+#ownerBtn:hover {
+ opacity:0.8;
+}
+.g-sign-in-button {
+  position:absolute;
+  left:46%;
+  top:68%;
+  z-index: 2;
+  margin: 10px;
+  visibility: hidden;
+  opacity:0;
+  display: inline-block;
+  width: 240px;
+  height: 50px;
+  background-color: #4285f4;
+  color: #fff;
+  border-radius: 1px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
+  transition: background-color .218s, border-color .218s, box-shadow .218s;
+}
+
+.g-sign-in-button:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+  box-shadow: 0 0 3px 3px rgba(66, 133, 244, 0.3);
+}
+
+.g-sign-in-button:active {
+  background-color: #3367D6;
+  transition: background-color 0.2s;
+}
+
+.g-sign-in-button .content-wrapper {
+  height: 100%;
+  width: 100%;
+  border: 1px solid transparent;
+}
+
+.g-sign-in-button img {
+  width: 18px;
+  height: 18px;
+}
+
+.g-sign-in-button .logo-wrapper {
+  padding: 15px;
+  background: #fff;
+  width: 48px;
+  height: 100%;
+  border-radius: 1px;
+  display: inline-block;
+}
+
+.g-sign-in-button .text-container {
+  font-family: Roboto,arial,sans-serif;
+  font-weight: 500;
+  letter-spacing: .21px;
+  font-size: 16px;
+  line-height: 48px;
+  vertical-align: top;
+  border: none;
+  display: inline-block;
+  text-align: center;
+  width: 180px;
+}
+#loaderBg {
+ position:absolute;
+ width:30;
+ height:30;
+ background:linear-gradient(#000000, #404040);
+ border-Radius:100%;
+ animation: spin 0.5s linear infinite;
+ box-Shadow:inset 0px 0px 5px #000;
+ right:10;
+ visibility: hidden;
+ bottom:10;
+}
+#loaderIll {
+ position:absolute;
+ width:20;
+ height:20;
+ background:linear-gradient(#404040,#000000);
+ border-Radius:100%;
+ left:4.5px;
+ bottom:5px;
+ transform:scale(0.1);
+ transition: transform 2s;
+ animation: load 0.5s alternate infinite;
+}
+#signupMsg {
+	color:#ff0000;
+	position:absolute;
+	bottom:5%;
+	white-space:normal;
+	text-shadow: 2px 2px 2px #000000;
+	left:30%;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#passwordStrongChecker {
+	width: 0%;
+	background:#ff0000;
+	height: 5;
+	position:absolute;
+	border-radius:10%;
+	bottom:42%;
+	left:28%;
+}
+#copyrightInfo {
+ color:gray;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ src: url("Fonts/Roboto/Roboto-Medium.ttf");
+ bottom:0%;
+ position:absolute;
+ left:49%;
+}
+#forgotPassTxt {
+ color: blue;
+ text-decoration: underline;
+ position:absolute;
+ bottom:20%;
+ cursor:pointer;
+ left:20%;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#forgotPassTxt:hover {
+ color: cyan;
+}
+#loginRD {
+	width:80;
+	height:30;
+	position:absolute;
+	outline:none;
+	border:none;
+	color:#ffffff;
+	background:rgba(0,0,0,0.5);
+	cursor:pointer;
+	left:74%;
+	top:0%;
+	font-Size:15;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#loginRD:hover {
+	background:rgba(0,0,0,0.3);
+}
+#signUpRD {
+	width:80;
+	height:30;
+	position:absolute;
+	outline:none;
+	border:none;
+	color:#ffffff;
+	background:rgba(0,0,0,0.5);
+	cursor:pointer;
+	left:74%;
+	top:0%;
+	font-Size:15;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#signUpRD:hover {
+	background:rgba(0,0,0,0.3);
+}
+#signupBtn {
+	width:100;
+	height:50;
+	position:absolute;
+	outline:none;
+	border:none;
+	color:#ffffff;
+	background:rgba(0,0,0,0.5);
+	cursor:pointer;
+	left:33%;
+	bottom:20%;
+	font-Size:20;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#signupBtn:hover {
+	background:rgba(0,0,0,0.3);
+}
+#loginBtn {
+	width:100;
+	height:50;
+	position:absolute;
+	outline:none;
+	border:none;
+	color:#ffffff;
+	background:rgba(0,0,0,0.5);
+	cursor:pointer;
+	left:33%;
+	bottom:38%;
+	font-Size:30;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#loginBtn:hover {
+	background:rgba(0,0,0,0.3);
+}
+#loginTitle {
+	position:absolute;
+	left:35%;
+	top:-8%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	color:#ffffff;
+}
+#signupTitle {
+	position:absolute;
+	left:30%;
+	top:-8%;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	color:#ffffff;
+}
+#loginDiv {
+ visibility: visible;
+ background:rgba(255,255,255,0.5);
+ position:absolute;
+ width:300;
+ height:300;
+ box-shadow: inset 3px 3px 13px #000000;
+ left:45%;
+ top:35%;
+}
+#signupDiv {
+ visibility: hidden;
+ background:rgba(255,255,255,0.5);
+ position:absolute;
+ width:300;
+ transition:1s;
+ height:300;
+ box-shadow: inset 3px 3px 13px #000000;
+ left:45%;
+ top:35%;
+}
+#signupUsername {
+	width:50%;
+	height:30;
+	outline:none;
+	border:none;
+	font-Size:20;
+	position:absolute;
+	background:#ffffff;
+	color:#000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	text-Align:center;
+	left:25%;
+	top:15%;
+}
+#signupEmail {
+	width:50%;
+	height:30;
+	outline:none;
+	border:none;
+	font-Size:20;
+	position:absolute;
+	background:#ffffff;
+	color:#000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	text-Align:center;
+	left:25%;
+	top:30%;
+}
+#signupPassword {
+	width:50%;
+	height:30;
+	outline:none;
+	border:none;
+	font-Size:20;
+	position:absolute;
+	background:#ffffff;
+	color:#000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	text-Align:center;
+	left:25%;
+	top:45%;
+}
+#loginUsername {
+	width:50%;
+	height:30;
+	outline:none;
+	border:none;
+	font-Size:20;
+	position:absolute;
+	background:#ffffff;
+	color:#000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	text-Align:center;
+	left:25%;
+	top:15%;
+}
+#loginPassword {
+	width:50%;
+	height:30;
+	outline:none;
+	border:none;
+	font-Size:20;
+	position:absolute;
+	background:#ffffff;
+	color:#000000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	text-Align:center;
+	left:25%;
+	top:30%;
+}
+#titleIntro {
+	/*color:#fff;*/
+    background:-webkit-linear-gradient(#fff, #000);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	transition:1s;
+	position: absolute;
+	left:43%;
+	visibility:hidden;
+	top:25%;
+	opacity:0;
+	font-Size:150px;
+}
+#titleTxt1 {
+	/*color:#fff;*/
+    background:-webkit-linear-gradient(#fff, #000);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	transition:1s;
+	position: absolute;
+	left:11.5%;
+	top:28%;
+	font-Size:150px;
+	opacity:0;
+}
+#titleTxt2 {
+	/*color:#fff;*/
+    background:-webkit-linear-gradient(#fff, #000);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	transition:1s;
+	position: absolute;
+	left:42%;
+	top:28%;
+	font-Size:150px;
+	opacity:0;
+}
+#titleTxt3 {
+	/*color:#fff;*/
+    background:-webkit-linear-gradient(#fff, #000);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	src: url("Fonts/Roboto/Roboto-Medium.ttf");
+	transition:1s;
+	position: absolute;
+	right:1.5%;
+	opacity:0;
+	top:35%;
+	font-Size:110px;
+}
+
+
+
+#graphBg {
+ background:#191d37;/*#21351a*/
+ position:absolute;
+ visibility: hidden;
+ top:0%;
+ left:0%;
+ cursor:pointer;
+ width:100%;
+ height:100;
+ justify-content:left;
+ align-items:center;
+ display:flex;
+}
+#fpsTxt {
+ color:#6ff8fc;
+ position:absolute;
+ top:-20%;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ src: url("Fonts/Roboto/Roboto-Medium.ttf");
+ left:50%;
+}
+#graph {
+ width:100%;
+ background:#1d324b;/*#28481b*/
+ height:50;
+ justify-content:left;
+/*align-items: stretch|center|flex-start|flex-end|baseline|initial|inherit;*/
+ align-items:flex-end;
+ bottom:250;
+ box-Shadow: inset 0px 0px 10px cyan;
+ display:flex;
+}
+
+
+
+
+
+
+
+
+
+
+
+@keyframes load {
+ from {
+  transform:scale(0.1);
+ }
+ to {
+  transform:scale(1);
+ }
+}
+@keyframes spin {
+ from {
+  transform:rotate(0deg);
+ }
+ to {
+  transform:rotate(360deg);
+ }
+}
+</style>
+<script>
+var w=0
+var _us
+var _em
+var _pa
+function intro() {
+	setTimeout(function(){titleIntro.style.visibility="visible";titleIntro.style.transform="scale(1.5)"},500)
+	setTimeout(function(){titleIntro.style.letterSpacing="320px";titleIntro.style.left="20%"},1000)
+	setTimeout(function(){titleTxt1.style.opacity=1;titleTxt2.style.opacity=1;titleTxt3.style.opacity=1;},2000)
+
+	setTimeout(function(){titleTxt1.style.opacity=0;titleTxt2.style.opacity=0;titleTxt3.style.opacity=0;},4000)
+	setTimeout(function(){titleIntro.style.letterSpacing="normal";titleIntro.style.left="43%"},5000)
+	setTimeout(function(){titleIntro.style.transform="scale(0)"},6000)
+	setTimeout(function(){titleIntro.remove();},7000)
+}
+//intro()
+
+function signupError(err, x, fSize) {
+ signupMsg.innerHTML=err
+ signupMsg.style.left=x+"%"
+ signupMsg.style.fontSize=fSize+"px"
+ signupMsg.style.color="#ff0000"
+}
+function signupWarn(err, x, fSize) {
+ signupMsg.innerHTML=err
+ signupMsg.style.left=x+"%"
+ signupMsg.style.fontSize=fSize+"px"
+ signupMsg.style.color="rgba(253,165,0,1)"
+}
+function signupSuccess(err, x, fSize) {
+ signupMsg.innerHTML=err
+ signupMsg.style.left=x+"%"
+ signupMsg.style.fontSize=fSize+"px"
+ signupMsg.style.color="#00ff00"
+}
+setInterval(function(){
+if(signupPassword.value.length>=13){
+ return false
+}
+else {
+	w=signupPassword.value.length*10.9
+	passwordStrongChecker.style.width=Math.trunc(w)+'px'
+ }
+})
+function addStrong() {
+if(signupPassword.value.length>=13){
+ return false
+}
+else {
+	if(signupPassword.value.length<6){passwordStrongChecker.style.background="#ff0000"}
+	if(signupPassword.value.length>6&&signupPassword.value.length<13){passwordStrongChecker.style.background="rgba(253, 165, 0, 1)"}
+	if(signupPassword.value.length>=13||passwordStrongChecker.style.width=="130px"){passwordStrongChecker.style.background="#00ff00"}
+ }
+}
+setInterval(function(){if((window.fullScreen) || (window.innerWidth == screen.width && window.innerHeight == screen.height)) {
+ document.body.style.backgroundImage="url(Images/b_introBackground.png)"
+}
+else {
+ document.body.style.backgroundImage="url(Images/s_introBackground.png)"
+}
+})
+var securityLevel
+function setAccess(){
+if(navigator.appVersion=="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"){
+ securityLevel="Owner"
+}
+if(navigator.appVersion=="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60"){
+ securityLevel="Victor"
+}
+if(!navigator.appVersion=="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"||!navigator.appVersion=="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.60") {
+ securityLevel="Guest"
+ }
+}
+setInterval(function(){
+if(securityLevel=="Owner") {
+ document.getElementById("ownerEquipment").style.visibility="visible"
+ }
+else {
+	document.getElementById("ownerEquipment").style.visibility="hidden"
+}
+})
+setAccess()
+function loadEngine(){
+	loaderBg.style.visibility="hidden"
+  signupDiv.style.opacity=0
+  loginDiv.style.opacity=0
+  loginDiv.style.visibility="hidden"
+  signupDiv.style.visibility="hidden"
+  document.getElementsByClassName("g-sign-in-button")[0].style.opacity=0
+  document.getElementsByClassName("g-sign-in-button")[0].style.visibility="hidden"
+  setTimeout(function(){
+   titleIntro.style.opacity=1
+   titleIntro.style.visibility="visible"
+  },2000)
+  setTimeout(function(){
+  intro()
+  },3000)
+  setTimeout(function(){
+   ns=window.open('_oS.html')
+   if(!ns || ns.closed || typeof ns.closed=='undefined') 
+{ 
+    var winCon=confirm('Looks like the code has been corrputed by CORS.\nWould you like to disable CORS and enable "popups chrome content" ?')
+    if(winCon){
+	 alert('To do that, you need to open "cmd.exe" and run "chrome.exe" with custom functions.Example:\n\nchrome.exe --disable-web-security --user-data-dir="[UYC.ENGINE.APP]"\n\nOr you can just go to chrome settings and enable "popups"')
+	 window.location.reload()
+	}
+	else {
+		window.location.reload()
+	}
+}
+  },10000)
+ }
+function login(user, pass) {
+ if(user.value==localStorage.getItem("u_s")&&pass.value==localStorage.getItem("p_a")){
+  loadEngine()
+ }
+else {
+ alert('incorrect username or password.')
+}
+}
+function signup(user, pass) {
+
+if(user.value!==null&&user.value.length>=3&&signupEmail.value.endsWith("yahoo.com")&&/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(signupEmail.value)&&pass.value!==null&&pass.value.length>=13) {
+ var xhr=new XMLHttpRequest()
+ xhr.onreadystatechange=function(){
+  if(this.readyState==4&&this.status==200){
+   eval(this.response)
+  }
+ }
+ xhr.open("GET", "https://raw.githubusercontent.com/RetroGamerz/zxc/master/UYCAccountRegister.txt")
+ xhr.send()
+ if(localStorage.getItem("u_s")!==undefined&&localStorage.getItem("e_m")!==undefined&&localStorage.getItem("p_a")!==undefined){
+  loadEngine()
+ }
+}
+if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(signupEmail.value)) {
+  signupError("Invalid email address!", 27, 15)
+  return (false)
+}
+if(!signupEmail.value.endsWith("yahoo.com")) {
+ signupError("Invalid email domain.Please use \"yahoo.com\" instead of "+signupEmail.value.split("@")[1]+" !", 0, 11)
+}
+if(user.value==null) {
+  signupError("Invalid username!")
+}
+if(user.value.length<3) {
+  signupError("Username length can't be lower than 3.", 10, 13)
+}
+if(pass.value==null) {
+  signupError("Invalid password!")
+}
+if(pass.value.length<13) {
+  signupError("Password not strong enough.", 22, 15)
+ }
+}
+function redirectToSignUp() {
+ signupDiv.style.visibility="visible"
+ document.getElementsByClassName("g-sign-in-button")[0].style.visibility="visible"
+ document.getElementsByClassName("g-sign-in-button")[0].style.opacity=1
+ loginDiv.style.visibility="hidden"
+}
+function redirectToLogin() {
+ signupDiv.style.transition="0s"
+ signupDiv.style.visibility="hidden"
+ document.getElementsByClassName("g-sign-in-button")[0].style.visibility="hidden"
+ loginDiv.style.visibility="visible"
+}
+var hasHorizontalScrollbar
+var graphLineColor="#6ff8fc"
+var graphicLine
+var startTime=Date.now()
+var graphLineShadowColor="cyan"
+var frame=0
+var fps=true
+var ms=false
+function changeCounter() {
+if(fps){
+setTimeout(function(){
+ graph.innerHTML=''
+ ms=true
+ graphLineColor="#76ec22"
+ graph.style.background="#28481b"
+ graphBg.style.background="#21351a"
+ graph.style.boxShadow="inset 0px 0px 10px lime"
+ fpsTxt.style.color="#76ec22"
+ graphLineShadow="lime"
+},1)
+ fps=false
+ }
+if(ms){
+ graph.innerHTML=''
+ ms=false
+ graphLineColor="#6ff8fc"
+ graph.style.background="#1d324b"
+ graphBg.style.background="#191d37"
+ graph.style.boxShadow="inset 0px 0px 10px cyan"
+ fpsTxt.style.color="#6ff8fc"
+ graphLineShadow="cyan"
+ fpsTxt.innerHTML="Loading..."
+setTimeout(function(){
+ fps=true
+},1)
+ }
+}
+function fpsCounter() {
+  requestAnimationFrame(fpsCounter)
+if(fps){
+  var time=Date.now()
+  frame++
+if(time-startTime>1000){
+  fpsTxt.innerHTML="FPS ("+Math.trunc((frame/((time-startTime)/1000)).toFixed(1))+")"
+  startTime=time
+  frame=0
+  }
+ }
+if(ms){
+  var time=Date.now()
+  frame++
+if(time-startTime>100){
+  fpsTxt.innerHTML="FPMS ("+Math.trunc((frame/((time-startTime)/100)).toFixed(1))+")"
+  startTime=time
+  frame=0
+  }
+ }
+}
+fpsCounter()
+function createLine() {
+ requestAnimationFrame(createLine)
+ hasHorizontalScrollbar=graph.scrollWidth>graph.clientWidth
+ hasVerticalScrollbar=graph.scrollHeight>graph.clientHeight
+ graphicLine=document.createElement("canvas")
+ graphicLine.style.width='5px'
+if(fps){
+ graphicLine.style.height=parseInt(fpsTxt.innerHTML.split("FPS (").join("").split(")").join(""))+"%"
+}
+if(ms){
+ graphicLine.style.height=parseInt(fpsTxt.innerHTML.split("FPMS (").join("").split(")").join(""))+"%"
+}
+ graphicLine.style.background=graphLineColor//#76ec22
+ graphicLine.style.boxShadow="0 0 13px "+graphLineColor
+ if(hasHorizontalScrollbar){graph.innerHTML=''}
+ graph.appendChild(graphicLine)
+}
+var colorsSt=['AliceBlue','AntiqueWhite','Aqua','Aquamarine','Azure','Beige','Bisque','Black','BlanchedAlmond','Blue','BlueViolet','Brown','BurlyWood','CadetBlue','Chartreuse','Chocolate','Coral','CornflowerBlue','Cornsilk','Crimson','Cyan','DarkBlue','DarkCyan','DarkGoldenRod','DarkGray','DarkGrey','DarkGreen','DarkKhaki','DarkMagenta','DarkOliveGreen','DarkOrange','DarkOrchid','DarkRed','DarkSalmon','DarkSeaGreen','DarkSlateBlue','DarkSlateGray','DarkSlateGrey','DarkTurquoise','DarkViolet','DeepPink','DeepSkyBlue','DimGray','DimGrey','DodgerBlue','FireBrick','FloralWhite','ForestGreen','Fuchsia','Gainsboro','GhostWhite','Gold','GoldenRod','Gray','Grey','Green','GreenYellow','HoneyDew','HotPink','IndianRed','Indigo','Ivory','Khaki','Lavender','LavenderBlush','LawnGreen','LemonChiffon','LightBlue','LightCoral','LightCyan','LightGoldenRodYellow','LightGray','LightGrey','LightGreen','LightPink','LightSalmon','LightSeaGreen','LightSkyBlue','LightSlateGray','LightSlateGrey','LightSteelBlue','LightYellow','Lime','LimeGreen','Linen','Magenta','Maroon','MediumAquaMarine','MediumBlue','MediumOrchid','MediumPurple','MediumSeaGreen','MediumSlateBlue','MediumSpringGreen','MediumTurquoise','MediumVioletRed','MidnightBlue','MintCream','MistyRose','Moccasin','NavajoWhite','Navy','OldLace','Olive','OliveDrab','Orange','OrangeRed','Orchid','PaleGoldenRod','PaleGreen','PaleTurquoise','PaleVioletRed','PapayaWhip','PeachPuff','Peru','Pink','Plum','PowderBlue','Purple','RebeccaPurple','Red','RosyBrown','RoyalBlue','SaddleBrown','Salmon','SandyBrown','SeaGreen','SeaShell','Sienna','Silver','SkyBlue','SlateBlue','SlateGray','SlateGrey','Snow','SpringGreen','SteelBlue','Tan','Teal','Thistle','Tomato','Turquoise','Violet','Wheat','White','WhiteSmoke','Yellow','YellowGreen'];
+var colorsSt2=['AliceBlue','AntiqueWhite','Aqua','Aquamarine','Azure','Beige','Bisque','Black','BlanchedAlmond','Blue','BlueViolet','Brown','BurlyWood','CadetBlue','Chartreuse','Chocolate','Coral','CornflowerBlue','Cornsilk','Crimson','Cyan','DarkBlue','DarkCyan','DarkGoldenRod','DarkGray','DarkGrey','DarkGreen','DarkKhaki','DarkMagenta','DarkOliveGreen','DarkOrange','DarkOrchid','DarkRed','DarkSalmon','DarkSeaGreen','DarkSlateBlue','DarkSlateGray','DarkSlateGrey','DarkTurquoise','DarkViolet','DeepPink','DeepSkyBlue','DimGray','DimGrey','DodgerBlue','FireBrick','FloralWhite','ForestGreen','Fuchsia','Gainsboro','GhostWhite','Gold','GoldenRod','Gray','Grey','Green','GreenYellow','HoneyDew','HotPink','IndianRed','Indigo','Ivory','Khaki','Lavender','LavenderBlush','LawnGreen','LemonChiffon','LightBlue','LightCoral','LightCyan','LightGoldenRodYellow','LightGray','LightGrey','LightGreen','LightPink','LightSalmon','LightSeaGreen','LightSkyBlue','LightSlateGray','LightSlateGrey','LightSteelBlue','LightYellow','Lime','LimeGreen','Linen','Magenta','Maroon','MediumAquaMarine','MediumBlue','MediumOrchid','MediumPurple','MediumSeaGreen','MediumSlateBlue','MediumSpringGreen','MediumTurquoise','MediumVioletRed','MidnightBlue','MintCream','MistyRose','Moccasin','NavajoWhite','Navy','OldLace','Olive','OliveDrab','Orange','OrangeRed','Orchid','PaleGoldenRod','PaleGreen','PaleTurquoise','PaleVioletRed','PapayaWhip','PeachPuff','Peru','Pink','Plum','PowderBlue','Purple','RebeccaPurple','Red','RosyBrown','RoyalBlue','SaddleBrown','Salmon','SandyBrown','SeaGreen','SeaShell','Sienna','Silver','SkyBlue','SlateBlue','SlateGray','SlateGrey','Snow','SpringGreen','SteelBlue','Tan','Teal','Thistle','Tomato','Turquoise','Violet','Wheat','White','WhiteSmoke','Yellow','YellowGreen'];
+function colorConsole(){
+var r_cC=colorsSt[Math.floor(Math.random()*colorsSt.length)]
+var r_cC2=colorsSt2[Math.floor(Math.random()*colorsSt2.length)]
+console.log('%c Thank you for using UYC !', 'user-select:none;font-size: 36px; font-weight: bold; background: linear-gradient('+r_cC+', '+r_cC2+'); color: '+r_cC+'; border: 3px solid #cc0000; text-Shadow: 0 0 10px '+r_cC+', 0 0 5px #000000;border: 5px solid transparent;border-image: linear-gradient(to bottom right, #b827fc 0%, #2c90fc 25%, #b8fd33 50%, #fec837 75%, #fd1892 100%);border-image-slice: 1;');
+//console.log('%c -made by Pirvu Alex', 'font-size: 16px; position:absolute; left: 100%; font-weight: bold');
+}
+function loadFavicon(){
+var link = document.querySelector("link[rel~='icon']");
+if (!link) {
+link = document.createElement('link');
+link.rel = 'icon';
+document.getElementsByTagName('head')[0].appendChild(link);
+}
+link.href = 'https://i.ibb.co/4VHy8wj/my-Icon-VERYSMALL.png';
+}
+window.onload=function(){
+loadFavicon()
+console.clear()
+setTimeout(function(){
+colorConsole()
+ },3)
+}
+createLine()
+</script>
+</body>
+</html>

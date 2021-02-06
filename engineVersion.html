@@ -1,0 +1,1301 @@
+<body>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.10/themes/default/style.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/3024-night.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/abcdef.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/ambiance.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/base16-dark.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/bespin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/blackboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/cobalt.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/colorforth.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/dracula.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/erlang-dark.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/hopscotch.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/icecoder.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/isotope.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/lesser-dark.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/liquibyte.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/material.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/mbo.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/mdn-like.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/theme/monokai.css">
+  <link rel="stylesheet" href="https://codemirror.net/addon/hint/show-hint.css">  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/xml/xml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/css/css.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/javascript/javascript.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://codemirror.net/mode/javascript/javascript.js"></script>
+  <script src="https://codemirror.net/addon/hint/show-hint.js"></script>
+  <script src="https://codemirror.net/addon/selection/active-line.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
+  <div id="gameEngine" style="visibility: visible;">
+  <h1 id="explorerTxt">EXPLORER</h1>
+  <div id="jstree" oncontextmenu="openOptionGui(event); return false;">
+    <ul>
+      <li id="rn1">Root node 1
+        <ul>
+          <li id="child_node_1">Child node 1</li>
+          <li>Child node 2</li>
+        </ul>
+      </li>
+      <li>Root node 2</li>
+    </ul>
+  </div>
+  <div id="optionGui">
+   <div id="optionGuiBg" style="z-index: 100;"></div>
+   <button id="optionGuiAddFolder" onclick="addFolder()" style="z-index: 100;">New Folder</button>
+   <button id="optionGuiAddScript" onclick="addScript()" style="z-index: 100;">Add Script</button>
+   <button id="optionGuiAddComponent" style="z-index: 100;" onmouseover="showComponents();transparentArrow()" onmouseout="hideComponents();nonTransparentArrow()">Add Component</button>
+   <img style="z-index: 100;" onmouseover="showComponents();transparentArrow()" onmouseout="hideComponents();nonTransparentArrow()" src="https://cdn.onlinewebfonts.com/svg/img_384596.png" id="optionGuiArrowRight">
+   <button style="z-index: 100;" onmouseover="showComponents()" onmouseout="hideComponents()" id="optionGuiAddSquareComp" onclick="addSquare()">Square</button>
+  </div>
+  <div id="propertiesTab">
+    <div id="propertiesBg"></div>
+    <h1 id="propertiesTxt">PROPERTIES</h1>
+  </div>
+  <input id="searchExplorer" placeholder="Search..." style="position:absolute;left:20%;top:0.7%;border-Radius:4px; outline:none; width:10%;height:3%;border:1px solid silver;">
+<div id="itemsList">
+<img onclick="spinAnimation();openAccountInfo();" src="https://icon-library.com/images/three-line-menu-icon/three-line-menu-icon-1.jpg" id="openAccountInfoBtn">
+</div>
+<div id="testDiagram"></div>
+<div id="accountInfoBg"></div>
+
+
+
+
+
+
+
+
+
+
+<div id="allCompilerArea" style="visibility: hidden;">
+  <div id="compiler">
+  <div id="compilerBg">
+  <textarea class="compilerLine" id="compilerTextArea"></textarea>
+  </div>
+  </div>
+  <button onclick="ts();addExe()" id="executionBtn">EXE</button>
+  <h1 id="qqq"></h1>
+  <div id="outputComp" contenteditable="true" aria-readonly="true"></div>
+  <canvas id="output"></canvas>
+  </div>
+  </div>
+<style>
+    body {
+    user-select: none;
+    overflow:hidden;
+    margin:0;
+  }
+  .cm-style1 { color: #c2a3c2; }
+.cm-style2 { color: #72a0df; }
+.cm-style3 { color: #81b772; }
+#output {
+    position:absolute;
+}
+#outputComp {
+    position:absolute;
+    left:50%;
+    cursor:default;
+    top:0%;
+    width:50%;
+    height:100%;
+    outline:none;
+    border:none;
+    color:transparent;
+    background:transparent;
+    opacity:1;
+    z-index: 3;
+}
+#compiler {
+    position:absolute;
+    left:0;
+    top:0;
+    background:gray;
+    width:100%;
+    height:100%;
+}
+#compilerBg {
+    position:absolute;
+    left:1%;
+    overflow: hidden;
+    top:1.5%;
+    background:#fff;
+    width:48%;
+    height:96%;
+}
+#compilerTextArea {
+z-Index:20;
+width:100%;
+position:absolute;
+left:0;
+top:0;
+background:#303030;
+color:#ffffff;
+border:none;
+outline:none;
+height:100%;
+}
+#qqq {
+    position:absolute;
+    left:500;
+    color:#ffffff;
+    top:0;
+}
+#executionBtn {
+z-Index:20;
+position:absolute;
+top:200;
+right:60;
+cursor:pointer;
+}
+#testDiagram {
+ position:absolute;
+ left:288;
+ visibility: hidden;
+ z-index:10000;
+ width:1401.5;
+ height:890;
+ top:48;
+ background:#ff0000;
+}
+#explorerTxt {
+ color:#ffffff;
+ position:absolute;
+ left:95;
+ top:-13;
+ z-Index:22;
+ font-Size:20;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#propertiesTxt {
+ color:#ffffff;
+ position:absolute;
+ right:55;
+ top:-13;
+ z-Index:22;
+ font-Size:20;
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+ src: url("Fonts/Roboto/Roboto-Medium.ttf");
+}
+#accountInfoBg {
+ width:15%;
+ background:#404040;
+ height:100%;
+ position:absolute;
+ left:0;
+ bottom:0;
+}
+#itemsList {
+ background:#000000;
+ opacity:0.5;
+ width:100%;
+ height:5%;
+ position:absolute;
+ top:0;
+ left:0;
+ z-Index:20;
+}
+#openAccountInfoBtn {
+ width:30;
+ height:30;
+ position:absolute;
+ left:10;
+ top:10;
+ filter:invert(1);
+ cursor:pointer;
+}
+#openAccountInfo:hover {
+ opacity:0.5;
+}
+  #jstree {
+   background:#364346;
+   border-top:30px solid #293538;
+   height:96.8%;
+   width:15%;
+   overflow:auto;
+   position:absolute;
+   left:0;
+   z-Index:21;
+   top:0;
+  }
+  #propertiesBg {
+   background:#364346;
+   z-Index:21;
+   border-top:30px solid #293538;
+   height:96.8%;
+   position:absolute;
+   right:0;
+   top:0;
+   width:12%;
+   overflow:auto;
+  }
+  #optionGuiArrowRight {
+    width:18;
+    filter:invert(1);
+    height:15;
+    visibility: hidden;
+    position:absolute;
+  }
+  #optionGuiAddSquareComp {
+   background:#20292b;
+   border-top: 1px solid gray;
+   border-bottom: 1px solid gray;
+   border-left: 0px solid transparent;
+   border-right: 0px solid transparent;
+   position:absolute;
+   outline:none;
+   visibility:hidden;
+   color:#ffffff;
+   width:10%;
+   height:4%;
+   cursor:pointer;
+  }
+  #optionGuiAddSquareComp:hover {
+   opacity:0.8;
+  }
+  #optionGuiAddComponent {
+   background:#20292b;
+   border-top: 1px solid gray;
+   border-bottom: 1px solid gray;
+   border-left: 0px solid transparent;
+   border-right: 0px solid transparent;
+   position:absolute;
+   outline:none;
+   visibility:hidden;
+   color:#ffffff;
+   width:10%;
+   height:4%;
+   cursor:default;
+  }
+  #optionGuiAddComponent:hover {
+   opacity:0.8;
+  }
+  #optionGuiBg {
+   background:#20292b;
+   position:absolute;
+   width:10%;
+   visibility:hidden;
+   height:15%;
+  }
+  #optionGuiAddFolder {
+   background:#20292b;
+   border-top: 1px solid gray;
+   border-bottom: 1px solid gray;
+   border-left: 0px solid transparent;
+   border-right: 0px solid transparent;
+   position:absolute;
+   outline:none;
+   visibility:hidden;
+   color:#ffffff;
+   width:10%;
+   height:4%;
+   cursor:pointer;
+  }
+  #optionGuiAddFolder:hover {
+   opacity:0.8;
+  }
+  #optionGuiAddScript {
+   background:#20292b;
+   border-top: 1px solid gray;
+   border-bottom: 1px solid gray;
+   border-left: 0px solid transparent;
+   border-right: 0px solid transparent;
+   position:absolute;
+   outline:none;
+   visibility:hidden;
+   color:#ffffff;
+   width:10%;
+   height:4%;
+   cursor:pointer;
+  }
+  #optionGuiAddScript:hover {
+   opacity:0.8;
+  }
+  </style>
+    <script>
+    var executed=0
+    var engine
+    var Engine = Matter.Engine,
+        Events = Matter.Events,
+        Render = Matter.Render,
+        Runner = Matter.Runner,
+        Body = Matter.Body,
+        Common = Matter.Common,
+        Composite = Matter.Composite,
+        Get = Matter.Get,
+        Composites = Matter.Composites,
+        Constraint = Matter.Constraint,
+        MouseConstraint = Matter.MouseConstraint,
+        Mouse = Matter.Mouse,
+        World = Matter.World,
+        Bodies = Matter.Bodies,
+        Sat = Matter.SAT,
+        Vector = Matter.Vector;
+
+setTimeout(function(){
+  if(!useScript){
+document.getElementsByTagName("canvas")[1].style.position="absolute"
+document.getElementsByTagName("canvas")[1].style.right="0px"
+  }
+},1)
+
+var elems=[]
+engine = Engine.create();
+var render = Render.create({
+                element: document.body,
+                engine: engine,
+                options: {
+                    width: window.innerWidth/2,
+                    height: window.innerHeight,
+                    wireframes: false
+                }
+             });
+ 
+
+ /*
+document.getElementsByTagName("canvas")[1].onclick=function(event){
+ var box = Bodies.rectangle(event.clientX, event.clientY, 30, 30)
+World.add(engine.world, box)
+}
+*/
+render.canvas.id="output"
+Engine.run(engine);
+Render.run(render);
+var canCreateBody=true
+var canCreateDialogs=true
+var canForce=true
+var useScript=false
+var ground
+setInterval(function(){
+ if(useScript){
+    //document.getElementsByTagName("canvas")[1].style.visibility="hidden"
+    document.getElementsByTagName("canvas")[1].style.position="absolute"
+    document.getElementsByTagName("canvas")[1].style.left="50%"
+    document.getElementsByTagName("canvas")[1].style.width="50%"
+    document.getElementsByTagName("canvas")[1].style.height="100%"
+ }
+ if(!useScript) {
+  document.getElementsByTagName("canvas")[1].style.position="absolute"
+document.getElementsByTagName("canvas")[1].style.left=288
+document.getElementsByTagName("canvas")[1].style.width="73%"
+document.getElementsByTagName("canvas")[1].style.height="100%"
+ }
+})
+function createRect(x,y,w,h) {
+    setTimeout(function(){
+    if(canCreateBody){
+ bx=Bodies.rectangle(x,y,w,h)
+ //elems.push(new Bodies.rectangle(x,y,w,h))
+ World.add(engine.world, new Bodies.rectangle(x,y,w,h))
+ //setInterval(function(){qqq.innerHTML=elems[0].position.y})
+    }
+    },10)
+}
+function setWireframe(bool) {
+    render.options.wireframes=bool
+}
+var wIn=0
+var dataType;
+var dT={
+ 
+}
+var varNum=0
+function variable(variableName, variableValue) {
+varNum++
+var regExp = /[a-zA-Z]/g;
+var varVar="var "+variableName+"="+variableValue;
+if(variableValue=="true"||variableValue=="false") {
+ //dataType="boolean"
+ dT[variableName]=typeof variableValue
+}
+else if(varVar.includes("'")||varVar.includes('"')){//regExp.compilerTextArea(variableValue)&&variableValue.startsWith("'")&&variableValue.endsWith("'")||regExp.compilerTextArea(variableValue)&&variableValue.startsWith('"')&&variableValue.endsWith('"')){
+ //dataType="string"
+ dT[variableName]=typeof variableValue
+} else {
+ //dataType="number"
+ dT[variableName]=typeof variableValue
+}
+ var newScript=document.createElement("script")
+ newScript.textContent=varVar
+ document.body.appendChild(newScript)
+ eval(varVar)
+}
+function getDataType(vN) {
+ alert(typeof vN)
+}
+
+
+var keywords = ["function", "createRect","var","wait","createGround"];
+$("#editor").on("keyup", function(e){
+  if (e.keyCode == 32){
+    var newHTML = "";
+    $(this).text().replace(/[\s]+/g, " ").trim().split(" ").forEach(function(val){
+      if (keywords.indexOf(val.trim()) > -1)
+        newHTML += "<span class='statement'>" + val + "&nbsp;</span>";
+      else
+        newHTML += "<span class='other'>" + val + "&nbsp;</span>"; 
+    });
+    $(this).html(newHTML);
+    var child = $(this).children();
+    var range = document.createRange();
+    var sel = window.getSelection();
+    range.setStart(child[child.length-1], 1);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    this.focus();
+  }
+});
+
+//document.getElementById("outputComp").style.width="50%"
+//document.getElementById("outputComp").style.height="100%"
+
+
+var win = {
+ x: outputComp.getBoundingClientRect().width,
+ y: outputComp.getBoundingClientRect().height
+ }
+
+var cK
+var game
+
+function gameRefresher(){
+game = {
+ getKey: cK,
+ winSize:{x: outputComp.getBoundingClientRect().width, y: outputComp.getBoundingClientRect().height},
+ }
+}
+setInterval(gameRefresher)
+
+document.getElementById("outputComp").addEventListener("keydown",function(event){
+if(!event.repeat){
+    cK=event.key
+    //setTimeout(function(){if(game.getKey==key){eval(code)}},3)
+}})
+var keyCount=0
+function addKey(func,code) {
+keyCount++
+var keyExecution="function _keyPressed"+keyCount+"() {"+func+"{"+code+"}};"+"outputComp.onkeyup=function(){_keyPressed"+keyCount+"()}"
+var newScript=document.createElement("script")
+newScript.textContent=keyExecution
+
+eval(keyExecution
+);document.body.appendChild(newScript)
+}
+/*
+function keyPress(functionName) {
+    setTimeout(function(){
+        var newScript = document.createElement("script")
+        newScript.textContent="outputComp.addEventListener('keypress', function(){"+functionName+"()})"
+        document.body.appendChild(newScript)
+    },100)
+}
+*/
+ //if(game.getKey==key){code}
+
+var plugins = {
+ 
+}
+function loadPlugin(pluginMode,pluginMode2,pluginMode3,pluginMode4,pluginMode5,pluginMode6,pluginMode7,pluginMode8,pluginMode9,pluginMode10,pluginMode11,pluginMode12,pluginMode13) {
+if(!pluginMode=='') {
+if(pluginMode.length>0) {
+    if(pluginMode=="collision"||pluginMode=="time"||pluginMode=="keyboardEvent"){
+  plugins[pluginMode]=true
+  }
+  else {
+  //console.error('wtf is this statement ? >:[')
+ }
+ }
+}
+if(!pluginMode2=='') {
+ if(pluginMode2.length>0) {
+  plugins[pluginMode2]=true
+ }
+}
+if(!pluginMode3=='') {
+ if(pluginMode3.length>0) {
+  plugins[pluginMode3]=true
+ }
+}
+if(!pluginMode4=='') {
+ if(pluginMode4.length>0) {
+  plugins[pluginMode4]=true
+ }
+}
+if(!pluginMode5=='') {
+ if(pluginMode5.length>0) {
+  plugins[pluginMode5]=true
+ }
+}
+if(!pluginMode6=='') {
+ if(pluginMode6.length>0) {
+  plugins[pluginMode6]=true
+ }
+}
+if(!pluginMode7=='') {
+ if(pluginMode7.length>0) {
+  plugins[pluginMode7]=true
+ }
+}
+if(!pluginMode8=='') {
+ if(pluginMode8.length>0) {
+  plugins[pluginMode8]=true
+ }
+}
+if(!pluginMode9=='') {
+ if(pluginMode9.length>0) {
+  plugins[pluginMode9]=true
+ }
+}
+if(!pluginMode10=='') {
+ if(pluginMode10.length>0) {
+  plugins[pluginMode10]=true
+ }
+}
+if(!pluginMode11=='') {
+ if(pluginMode11.length>0) {
+  plugins[pluginMode11]=true
+ }
+}
+if(!pluginMode12=='') {
+ if(pluginMode12.length>0) {
+  plugins[pluginMode12]=true
+ }
+}
+if(!pluginMode13=='') {
+ if(pluginMode13.length>0) {
+  plugins[pluginMode13]=true
+ }
+}
+}
+setInterval(function(){
+ if(plugins.hasOwnProperty("undefined")){
+  delete plugins[undefined]
+ }
+})
+/*
+function plugin(pluginMode) {
+ if(pluginMode.includes("collision")&&pluginMode.startsWith("{")&&pluginMode.endsWith("}")) {
+  plugins["collision"]=true
+ }
+ if(pluginMode.includes("time")&&pluginMode.startsWith("{")&&pluginMode.endsWith("}")) {
+  plugins["time"]=true
+ }
+ alert(pluginMode.split)
+}
+*/
+function IMPORT(scriptSource) {
+ var newScript=document.createElement("script")
+ newScript.src=scriptSource
+ document.body.appendChild(newScript)
+}
+function loop(interval, intName, code) {
+ eval("for(var "+intName+"=0;"+intName+"<"+interval+"-1;"+intName+"++){"+code+"}")
+}
+function wait(time, converison, code) {
+ var _time
+ var convertedCode
+ var n
+ if(converison=="s"){
+     _time=time+"000"
+ }
+ if(converison=="ms"){
+     _time=time+"00"
+ }
+ if(code.startsWith("{")&&code.endsWith("}")){
+ n=code.slice(0,-1).substring(1)
+ convertedCode="setTimeout(function(){"+n+"},"+_time+")"
+ }
+ if(!code.startsWith("{")){alert("Missing { to the wait statement.")}
+ if(!code.endsWith("}")){alert("Missing } to the wait statement.")}
+ eval(convertedCode)
+ //alert(convertedCode)
+}
+var ttf = document.createElement('link')
+ttf.setAttribute('rel', 'stylesheet')
+ttf.setAttribute('type', 'text/css')
+ttf.setAttribute('href', 'https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap')
+document.head.appendChild(ttf)
+
+outputComp.style.width="50%"
+outputComp.style.height="100%"
+function createDialog(title, text) {
+if(canCreateDialogs){
+ var dialogBg=document.createElement("div")
+ var dialogHeader=document.createElement("div")
+ var dialogTitle=document.createElement("h3")
+ var dialogText=document.createElement("h3")
+ var dialogX=document.createElement("button")
+ 
+ dialogBg.style.background="gray"
+ dialogBg.style.position="absolute"
+ dialogBg.style.left=outputComp.style.width.split("%").join("")+"%"
+ dialogBg.style.top=outputComp.style.height.split("%").join("")/2+"%"
+ dialogBg.style.width=300
+ dialogBg.style.zIndex=2000
+ dialogBg.style.height=200
+ dialogBg.style.transform = "translate(-50%, -50%)"
+ dialogBg.id="dialogBg"
+ dialogBg.setAttribute("class", "dBg")
+
+ dialogHeader.style.background="#000000"
+ dialogHeader.style.position="absolute"
+ dialogHeader.style.width=300
+ dialogHeader.style.height=30
+ dialogHeader.style.zIndex=2000
+ dialogHeader.style.cursor="grab"
+ dialogBg.id="dialogHeader"
+
+ dialogTitle.style.position="absolute"
+ dialogTitle.style.color="#ffffff"
+ dialogTitle.style.fontFamily="Roboto"
+ dialogTitle.style.zIndex=2000
+ dialogTitle.style.left=parseInt(dialogHeader.style.width.split("px").join(""))/3
+ dialogTitle.style.top=parseInt(dialogHeader.style.height.split("px").join(""))-45
+ dialogTitle.innerHTML=title
+
+ dialogText.style.position="absolute"
+ dialogText.style.color="#000000"
+ dialogText.style.zIndex=2000
+ dialogText.style.fontFamily="Roboto"
+ dialogText.style.left=parseInt(dialogBg.style.width.split("px").join(""))-290
+ dialogText.style.top=parseInt(dialogBg.style.height.split("px").join(""))-185
+ dialogText.innerHTML=text
+
+ dialogX.style.position="absolute"
+ dialogX.style.background="darkred"
+ dialogX.style.color="#000000"
+ dialogX.style.width=30
+ dialogX.style.height=30
+ dialogX.style.zIndex=2000
+ dialogX.style.outline="none"
+ dialogX.style.border="none"
+ dialogX.style.fontFamily="Roboto"
+ dialogX.style.cursor="pointer"
+ dialogX.style.left=parseInt(dialogBg.style.width.split("px").join(""))-30
+ dialogX.style.top=parseInt(dialogBg.style.height.split("px").join(""))-200
+ dialogX.innerHTML="X"
+ dialogX.onmouseover=function(){dialogX.style.background="red"}
+ dialogX.onmouseout=function(){dialogX.style.background="darkred"}
+ dialogX.onclick=function(){
+     for(var x=0;x<document.getElementsByClassName("dBg").length;x++){
+       document.getElementsByClassName("dBg")[x].remove()
+      }
+     }
+ 
+ outputComp.style.overflow="auto"
+ outputComp.appendChild(dialogBg)
+ dialogBg.appendChild(dialogHeader)
+ dialogBg.appendChild(dialogTitle)
+ dialogBg.appendChild(dialogText)
+ dialogBg.appendChild(dialogX)
+}
+else {
+    return false
+}
+
+var isDown = false
+var elem = dialogBg
+var div = dialogHeader
+div.addEventListener('mousedown', function(e) {
+    isDown = true;
+    dialogHeader.style.cursor="grabbing"
+    offset = [
+        elem.offsetLeft - e.clientX,
+        elem.offsetTop - e.clientY
+    ];
+}, true);
+
+document.addEventListener('mouseup', function() {
+    isDown = false;
+    dialogHeader.style.cursor="grab"
+}, true);
+
+document.addEventListener('mousemove', function(event) {
+    event.preventDefault();
+    if (isDown) {
+        mousePosition = {
+
+            x : event.clientX,
+            y : event.clientY
+
+        };
+        dialogHeader.style.cursor="grabbing"
+        elem.style.left = (mousePosition.x + offset[0]) + 'px';
+        elem.style.top  = (mousePosition.y + offset[1]) + 'px';
+    }
+}, true);
+function ungrab() {
+ return false
+ }
+}
+
+
+function collisionDetection(obj1,obj2,code) {
+    eval("setInterval(function(){var collision = Matter.SAT.collides("+obj1+", "+obj2+");if (collision.collided) {"+code+";}},10)")
+/*
+    var part = editor.setValue(substring(
+        compilerTextArea.value.lastIndexOf("collisionDetection")+27+getFnParamNames(collisionDetection).join(",").length, 
+        compilerTextArea.value.lastIndexOf("endCol();")
+));
+*/
+//alert(part)
+/*
+Matter.Events.on(engine, 'collisionStart', function(event) {
+    var A_Elm = obj1;
+    var B_Elm = obj2;
+    setTimeout(function(){
+    eval(code)
+    canForce=true
+    setTimeout(function(){canForce=false},10)
+    },10)
+})
+*/
+ //setTimeout(function(){alert(getFnParamNames(collisionDetection).join(",").length)},1000)
+}
+
+function getFnParamNames(fn){
+    var fstr = fn.toString();
+    return fstr.match(/\(.*?\)/)[0].replace(/[()]/gi,'').replace(/\s/gi,'').split(',');
+}
+
+function endCol() {
+    return false
+}
+function createGround(x,y,w,h) {
+if(x=="def"&&y=="def"&&w=="def"&&h=="def"){
+ ground = Bodies.rectangle(win.x-480, win.y, win.x, 100, { isStatic: true })
+ World.add(engine.world, [ground])
+}
+else {
+setTimeout(function(){
+ ground = Bodies.rectangle(x, y, w, h, { isStatic: true })
+ World.add(engine.world, [ground])
+  },50)
+ }
+}
+function removeBody(body) {
+    World.remove(engine.world, body)
+ //var ind=elems.indexOf(2)
+    //elems.splice(ind, 1)
+    //console.log(elems)
+ //World.remove(engine.world, body)
+}
+function addForceX(body,val) {
+    setTimeout(function(){
+        if(canForce){
+ Matter.Body.applyForce( body, {x: body.position.x, y: body.position.y}, {x: val, y: 0});
+        }
+    },10)
+}
+function addForceY(body,val) {
+if(!val.toString().indexOf('-')&&canForce===true){
+    setTimeout(function(){
+    Matter.Body.applyForce( body, {x: body.position.x, y: body.position.y}, {x: 0, y: Math.abs(val)});
+},10)
+}
+if(val.toString().indexOf('-')&&canForce===true){
+    setTimeout(function(){
+ Matter.Body.applyForce( body, {x: body.position.x, y: body.position.y}, {x: 0, y: -Math.abs(val)});
+},10)
+}}
+function addExe() {
+    executed++
+    if(executed==1){
+ window.location.reload()
+ }
+}
+function ts() {
+    /*
+World.remove(engine.world, Matter.Composite.allBodies(engine.world))
+setTimeout(function(){eval(compilerTextArea.value)},10)
+*/
+ var r=editor.getValue()
+ var fR=r.replace("document.body", "outputComp").split("def").join("'def'").split("getBody").join("engine.world.bodies")
+ eval(fR)
+
+ try {
+  editor.getValue()
+ }
+ catch(err) {
+  //alert(err)
+  if(err.length==0){/*alert('no errors :D')*/}
+ }
+
+ var savedCode=localStorage.setItem("code",editor.getValue())
+}
+window.onload=function(){
+    if(localStorage.getItem("code").length>0) {
+        //alert('placing: code')
+        editor.setValue(localStorage.getItem("code"))
+        ts()
+    }
+}
+window.onerror=function(error){
+    //alert(error)
+    //var zxc = error.split("Uncaught ReferenceError:").join("").split("is not defined").join("")
+    //var newStorage=localStorage.getItem("code").split(zxc).join("")
+    //alert(error)
+    //localStorage.setItem("code",newStorage)
+    //window.location.reload()
+}
+var i = -1
+CodeMirror.defineMode("UYC_PROGRAMMING_LANGUAGE", function() {
+    return {
+        token: function(stream,state) {
+            if (stream.match("removeBody")||stream.match("collisionDetection")||stream.match("createDialog")||stream.match("setWireFrame")||stream.match("getDataType")||stream.match("variable")||stream.match("addForceY")||stream.match("addForceX")||stream.match("setWireframe")||stream.match("createRect")||stream.match("createGround")||stream.match("wait")) {
+                return "style1";
+            }
+            else if (stream.match("0")||stream.match("1")||stream.match("2")||stream.match("3")||stream.match("4")||stream.match("5")||stream.match("6")||stream.match("7")||stream.match("8")||stream.match("9")) {
+                return "style2";
+            } 
+            else if (stream.match("true")||stream.match("false")||stream.match("elems")) {
+                return "style3";
+            } 
+            else {
+                stream.next();
+                return null;
+            }
+        }
+    };
+});
+var editor = CodeMirror.fromTextArea(document.getElementById("compilerTextArea"), {
+  lineNumbers: true,
+  styleActiveLine: true,
+  mode: "UYC_PROGRAMMING_LANGUAGE",
+  indentWithTabs: true,
+});
+(function () {
+  editor.setOption('extraKeys', {
+    /*'Ctrl-E': function () {
+      snippet();
+    } */});
+    editor.on("keypress", function() {
+     snippet()
+    })
+  var snippets = [
+  { text: 'createRect()', displayText: 'createRect' },
+  { text: 'removeBody()', displayText: 'removeBody' },
+  { text: 'collisionDetection()', displayText: 'collisionDetection' },
+  { text: 'createDialog()', displayText: 'createDialog' },
+  { text: 'setWireFrame()', displayText: 'setWireFrame' },
+  { text: 'getDataType()', displayText: 'getDataType' },
+  { text: 'variable()', displayText: 'variable' },
+  { text: 'addForceY()', displayText: 'addForceY' },
+  { text: 'addForceX()', displayText: 'addForceX' },
+  { text: 'createGround()', displayText: 'createGround' },
+  { text: 'wait()', displayText: 'wait' }];
+  function snippet() {
+    CodeMirror.showHint(editor, function () {
+      var cursor = editor.getCursor();
+      var token = editor.getTokenAt(cursor);
+      var start = token.start;
+      var end = cursor.ch;
+      var line = cursor.line;
+      var currentWord = token.string;
+      var list = snippets.filter(function (item) {
+        return item.text.indexOf(currentWord) >= 0;
+      });
+      return {
+        list: list.length ? list : snippets,
+        from: CodeMirror.Pos(line, start),
+        to: CodeMirror.Pos(line, end) };
+    }, { completeSingle: false });
+  }
+})();
+var themes = ['3024-night', 'abcdef', 'ambiance', 'base16-dark', 'bespin', 'blackboard', 'cobalt', 'colorforth', 'dracula', 'erlang-dark', 'hopscotch', 'icecoder', 'isotope', 'lesser-dark', 'liquibyte', 'material', 'mbo', 'mdn-like', 'monokai'];
+var theme = themes[Math.floor(Math.random() * themes.length)];
+/*
+                                                                * default
+                                                                * 3024-day
+                                                                * 3024-night
+                                                                * abcdef
+                                                                * ambiance
+                                                                * base16-dark
+                                                                * base16-light
+                                                                * bespin
+                                                                * blackboard
+                                                                * cobalt
+                                                                * colorforth
+                                                                * dracula
+                                                                * duotone-dark
+                                                                * duotone-light
+                                                                * eclipse
+                                                                * elegant
+                                                                * erlang-dark
+                                                                * hopscotch
+                                                                * icecoder
+                                                                * isotope
+                                                                * lesser-dark
+                                                                * liquibyte
+                                                                * material
+                                                                * mbo
+                                                                * mdn-like
+                                                                * midnight
+                                                                * monokai
+                                                                * neat
+                                                                * neo
+                                                                * night
+                                                                * panda-syntax
+                                                                * paraiso-dark
+                                                                * paraiso-light
+                                                                * pastel-on-dark
+                                                                * railscasts
+                                                                * rubyblue
+                                                                * seti
+                                                                * solarized dark
+                                                                * solarized light
+                                                                * the-matrix
+                                                                * tomorrow-night-bright
+                                                                * tomorrow-night-eighties
+                                                                * ttcn
+                                                                * twilight
+                                                                * vibrant-ink
+                                                                * xq-dark
+                                                                * xq-light
+                                                                * yeti
+                                                                * zenburn
+                                                                *
+*/
+editor.setOption('theme', themes[0])
+var a="CodeMirror cm-s-"+themes[0]
+document.getElementsByClassName(a)[0].style.position="absolute"
+document.getElementsByClassName(a)[0].style.left="0%"
+document.getElementsByClassName(a)[0].style.bottom="0%"
+document.getElementsByClassName(a)[0].style.width="100%"
+document.getElementsByClassName(a)[0].style.height="90%"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+setTimeout(function(){
+document.getElementsByTagName("canvas")[0].style.position="absolute"
+document.getElementsByTagName("canvas")[0].style.left="0%"
+document.getElementsByTagName("canvas")[0].style.top="0%"
+document.getElementsByTagName("canvas")[0].style.zIndex=-1
+},1)
+// function setup(){
+// var canvas=document.getElementsByTagName("canvas")[0]
+// var canvasmouse=Mouse.create(canvas.elt);
+// canvasmouse.pixelRatio=pixelDensity();
+// var options = { mouse:canvasmouse};
+// mConstraint=MouseConstraint.create(engine, options);
+// World.add(engine.world, mConstraint);
+// }
+
+function addSquare(){
+create_component()
+squareNum++
+squares.push(new Bodies.rectangle(Math.floor((Math.random()*1401.5)+288), Math.floor((Math.random()*890)+48), 50, 50, {isStatic:true}));
+World.add(engine.world, squares)
+}
+ 
+//Engine.run(engine);
+//Render.run(render);
+
+    $(function () {
+      $('#jstree').jstree();
+      $('#jstree').on("changed.jstree", function (e, data) {
+        ///console.log(data.selected);
+      });
+    });
+  $('#jstree').jstree({
+    'core' : {
+        'data' : [
+        
+        { "text" : "Camera", "icon":"https://icons.iconarchive.com/icons/icons8/windows-8/16/Photo-Video-Camera-icon.png",
+        "children" : [ { "text":"Camera Script", icon: "https://icons.iconarchive.com/icons/roundicons/100-free-solid/16/video-camera-settings-icon.png" }]},
+
+        /*
+          { "text" : "Root node", "children" : [
+            { "text" : "Child node 1" },
+            { "text" : "Child node 2" }
+          ]},  {"text":"ok?","icon":"https://i.ibb.co/RN6VrNZ/test2.png", "children":[{"text":"another OK?"}]},
+      /*
+          { "text" : "Root node", "children" : [
+            { "text" : "Child node 1" },
+            { "text" : "Child node 2" }
+          ]}
+          */
+        ],
+        'check_callback' : true
+      },
+      'types' : {
+        '#' : {
+          'max_depth': 2
+        },
+        'default' : { 
+          'valid_children' : ['default','folder'],
+          'max_children': 4
+        }
+      },
+      
+      'plugins' : ["dnd", "search","sort"],
+  
+      "dnd" : {
+                      "is_draggable" : function(node, event) {
+                          //console.log('is_draggable called: ', node[0]);
+                          if (event.target.id.indexOf("script")) {
+                              //alert('this type is not draggable');
+                              return false;
+                          }
+                          return true;
+                      }
+                  },
+                  "MY-DRAGGABLE-TYPE" : {
+                         // "icon" : "https://i.ibb.co/RN6VrNZ/test2.png"
+                            "type" : ""
+                      }
+  
+    });
+  
+  //$('#createForlder').on('click', create_node);
+  
+var folNum=0
+var scrNum=0
+  function create_folder() {
+    folNum++
+    var ref = $('#jstree').jstree(true),
+        sel = ref.get_selected();
+    if(!sel.length) { sel[0] = '#'; }
+    sel = sel[0];
+    sel = ref.create_node(sel, {"text" : "New folder", "id" : "folder"+folNum,"type":"folder"}, 'last');
+    ref.set_icon('https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg')
+    if(sel) {
+      ref.edit(sel);
+    }
+  }
+  
+  
+  
+  function create_script() {
+    scrNum++
+    var ref = $('#jstree').jstree(true),
+        sel = ref.get_selected();
+    if(!sel.length) { sel[0] = '#'; }
+    sel = sel[0];
+    sel = ref.create_node(sel, {"id" : "script"+scrNum,"type":"script","text" : "New script","icon":"https://i.ibb.co/RN6VrNZ/test2.png"}, 'last');
+    if(sel) {
+      ref.edit(sel);
+    }
+  }
+  
+  var comNum=0
+
+  function create_component() {
+    comNum++
+    var ref = $('#jstree').jstree(true),
+        sel = ref.get_selected();
+    if(!sel.length) { sel[0] = '#'; }
+    sel = sel[0];
+    sel = ref.create_node(sel, {"id" : "component"+comNum,"type":"component","text":"New component","icon":"https://icons.iconarchive.com/icons/everaldo/crystal-clear/16/Device-blockdevice-cubes-icon.png"}, 'last');
+    if(sel) {
+      ref.edit(sel);
+    }
+  }
+
+
+  
+  function openOptionGui(event) {
+   optionGuiBg.style.left=event.clientX+5
+   optionGuiBg.style.top=event.clientY
+   optionGuiAddFolder.style.left=event.clientX+5
+   optionGuiAddFolder.style.top=event.clientY
+   optionGuiAddScript.style.left=event.clientX+5
+   optionGuiAddScript.style.top=event.clientY+37
+   optionGuiAddComponent.style.left=event.clientX+5
+   optionGuiAddComponent.style.top=event.clientY+74
+   optionGuiArrowRight.style.left=event.clientX+173
+   optionGuiArrowRight.style.top=event.clientY+85
+   optionGuiAddSquareComp.style.left=event.clientX+197
+   optionGuiAddSquareComp.style.top=event.clientY+74
+   optionGuiBg.style.visibility="visible"
+   optionGuiAddScript.style.visibility="visible"
+   optionGuiAddFolder.style.visibility="visible"
+   optionGuiAddComponent.style.visibility="visible"
+   optionGuiArrowRight.style.visibility="visible"
+  }
+  function addFolder() {
+   create_folder()
+  }
+  $(document).on('click', function (event) {
+    if(!$(event.target).closest('#optionGuiBg').length) {
+   optionGuiBg.style.visibility="hidden"
+   optionGuiAddFolder.style.visibility="hidden"
+   optionGuiAddScript.style.visibility="hidden"
+   optionGuiAddComponent.style.visibility="hidden"
+   optionGuiArrowRight.style.visibility="hidden"
+   optionGuiAddSquareComp.style.visibility="hidden"
+    }
+  })
+  function addScript(){
+   create_script()
+  }
+  /*
+  $("#jstree").on('changed.jstree', function(evt, data) {
+    if(data.action === "select_node") {
+      data.instance.set_icon(data.node, 'https://pbs.twimg.com/profile_images/758084549821730820/_HYHtD8F.jpg');
+    }
+  });
+  */
+  var squareNum=0
+  var squares=[]
+  $(function () {
+      $('#jstree').jstree();
+      $('#jstree').on("changed.jstree", function (e, data) {
+        //console.log(data.selected);
+        window.ondblclick=function(){
+          //alert(data.node.id)
+        if(data.node.text=="Camera Script") {
+          alert("opening camera script O_O")
+        }
+        if(data.node.id.includes("script")) {
+          allCompilerArea.style.visibility="visible"
+          gameEngine.style.visibility="hidden"
+          useScript=true
+        }
+        //if(data.node.text=="") {
+        //  alert("opening camera script O_O")
+       // }
+        }
+      });
+    });
+  jstree.onclick=function(event){
+   //alert(event.target.innerHTML)
+   //alert(event.target.tagName)
+   /*
+   if(event.target.tagName=="A") {
+    alert(event.target.get_icon())
+   }
+   */
+  }
+  $(function () {
+  var to = false;
+  $('#searchExplorer').keyup(function () {
+    if(to) { clearTimeout(to); }
+    to = setTimeout(function () {
+      var v = $('#searchExplorer').val();
+      $('#jstree').jstree(true).search(v);
+    }, 0);
+  });
+});
+
+
+/*
+$("#jstree").on("move_node.jstree", function(e, data) {
+            //if (data.node.type == "item") {
+                var itemNode = data.node;
+                var oldParentNode = $('#jstree').jstree(true).get_node(data.old_parent);
+                var newParentNode = $('#jstree').jstree(true).get_node(data.parent);
+                console.log(oldParentNode.id+" moved to "+newParentNode.id);
+                if(oldParentNode.id.indexOf("script")&&newParentNode.id.indexOf("folder")){
+                  alert("I'm sorry but you can't move " + oldParentNode + " to " + newParentNode + " :(");
+                  $('#jstree').jstree({
+                  "default" : {
+    draggable : false
+}
+                })
+                }
+/*}*/
+
+/*
+$("#jstree").jstree.bind("move_node.jstree", function (e, data) {
+        alert('test')
+        });
+*/
+
+function showComponents() {
+  optionGuiAddSquareComp.style.visibility="visible"
+}
+function transparentArrow() {
+  optionGuiAddComponent.style.opacity=0.8
+  optionGuiArrowRight.style.opacity=0.8
+}
+function hideComponents() {
+ optionGuiAddSquareComp.style.visibility="hidden"
+}
+function nonTransparentArrow() {
+  optionGuiAddComponent.style.opacity=1
+  optionGuiArrowRight.style.opacity=1
+}
+window.onload=function(){
+  window.ondblclick=function(){
+  if(mConstraint.body) {
+    //alert(mConstraint.body.id)
+    //alert(mConstraint.body.id)
+    var currentID=mConstraint.body.id-2
+    Matter.Body.setStatic(squares[currentID], false)
+    alert(squares[currentID].label)
+  }
+ }
+}
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
